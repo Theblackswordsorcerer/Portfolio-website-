@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Himank Sharma — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --accent: #e8c547;
+    --accent2: #c9a227;
+    --text: #f0eee8;
+    --muted: #888885;
+    --faint: #444440;
+    --red: #e05252;
+    --blue: #5b9cf6;
+    --green: #52c97a;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4rem;
+    height: 64px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 4rem 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(232,197,71,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(91,156,246,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    padding: 6px 14px;
+    border: 1px solid rgba(232,197,71,0.25);
+    border-radius: 2px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 100px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+  }
+  .hero-bio {
+    max-width: 560px;
+    color: #aaa8a0;
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-weight: 600;
+  }
+  .btn-primary:hover { background: #f0d060; }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border2);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  /* ---- SECTION WRAPPER ---- */
+  section { padding: 6rem 4rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- ABOUT ---- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-text p {
+    color: #aaa8a0;
+    margin-bottom: 1rem;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .about-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+  }
+  .info-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .info-value {
+    font-size: 14px;
+    color: var(--text);
+  }
+  .info-value a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .info-value a:hover { text-decoration: underline; }
+
+  /* ---- PROJECTS ---- */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--border2);
+    background: var(--surface2);
+  }
+  .project-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  .project-desc {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+  .project-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 9px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .project-status {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 6px;
+  }
+
+  /* ---- SKILLS ---- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .skill-item:hover { border-color: rgba(232,197,71,0.3); }
+  .skill-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .skill-source {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- CERTIFICATIONS ---- */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  .cert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .cert-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+  }
+  .cert-card.type-completion::before { background: var(--accent); }
+  .cert-card.type-participation::before { background: var(--blue); }
+  .cert-card.type-initiation::before { background: var(--green); }
+  .cert-card.type-course::before { background: #c084fc; }
+  .cert-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .cert-type {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-left: 12px;
+  }
+  .cert-card.type-completion .cert-type { color: var(--accent); }
+  .cert-card.type-participation .cert-type { color: var(--blue); }
+  .cert-card.type-initiation .cert-type { color: var(--green); }
+  .cert-card.type-course .cert-type { color: #c084fc; }
+  .cert-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    padding-left: 12px;
+    line-height: 1.4;
+  }
+  .cert-issuer {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    padding-left: 12px;
+    margin-bottom: 4px;
+  }
+  .cert-date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    padding-left: 12px;
+  }
+
+  /* ---- HACKATHONS / PARTICIPATION ---- */
+  .hack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .hack-item {
+    background: var(--surface);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    transition: background 0.2s;
+  }
+  .hack-item:last-child { border-bottom: none; }
+  .hack-item:hover { background: var(--surface2); }
+  .hack-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .hack-desc {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  .hack-badge {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .badge-participated { background: rgba(91,156,246,0.12); color: var(--blue); border: 1px solid rgba(91,156,246,0.2); }
+  .badge-completed { background: rgba(232,197,71,0.1); color: var(--accent); border: 1px solid rgba(232,197,71,0.2); }
+
+  /* ---- TIMELINE / EDUCATION ---- */
+  .edu-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  .edu-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .edu-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .edu-detail { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ---- CONTACT ---- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 700px;
+  }
+  .contact-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: var(--accent); }
+  .contact-platform {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .contact-handle {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    margin: 0 4rem;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.7s ease forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 100px 1.5rem 60px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .divider { margin: 0 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">HS.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#hackathons">Hackathons</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner">
+    <div class="hero-tag fade-in">He / Him &nbsp; Delhi, India</div>
+    <h1 class="fade-in">Himank<br><span>Sharma</span></h1>
+    <p class="hero-subtitle fade-in">High School Student · Aspiring Engineer · Creative Writer & Poet</p>
+    <p class="hero-bio fade-in">
+      Exploring the frontiers of Artificial Intelligence, Machine Learning, and Information Sciences &amp; Communication.
+      Passed out from Dr. Bhimrao Ambedkar School of Specialised Excellence, Delhi.
+      Building projects, earning certifications, and competing in hackathons — one challenge at a time.
+    </p>
+    <div class="hero-links fade-in">
+      <a href="https://www.linkedin.com/in/himank-sharma-6aa115371/" target="_blank" class="btn btn-primary">LinkedIn</a>
+      <a href="https://github.com/Theblackswordsorcerer" target="_blank" class="btn btn-outline">GitHub</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats fade-in">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div>
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Hackathons</div>
+      </div>
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Live Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Skills Listed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm Himank Sharma — a high school student from Delhi with a deep passion for technology, particularly in the domains of Artificial Intelligence and Machine Learning. I believe in learning by doing, which is why I have immersed myself in job simulations, hackathons, workshops, and online courses from institutions like Columbia University, Google, BCG, Deloitte, Skyscanner, GE Aerospace, and JP Morgan Chase.
+        </p>
+        <p>
+          Beyond tech, I'm a creative writer and poet, which gives me a unique perspective on communication and problem-solving. I approach every project with both analytical rigour and creative curiosity.
+        </p>
+        <p>
+          Having passed out of school and actively preparing for my engineering journey, I aim to bridge the gap between theoretical knowledge and real-world application — whether that's building browser-based operating systems, AI agents, or contributing to hackathons addressing India's most pressing challenges.
+        </p>
+      </div>
+      <div class="about-info">
+        <div class="info-card">
+          <div class="info-label">Education</div>
+          <div class="info-value">Dr. Bhimrao Ambedkar School of Specialised Excellence</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">Current Grade</div>
+          <div class="info-value">Passed Out — Grade 12 (2011 – 2026)</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">Location</div>
+          <div class="info-value">Delhi, India</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">Interests</div>
+          <div class="info-value">AI · ML · Cybersecurity · Creative Writing · Poetry · Engineering</div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">LinkedIn</div>
+          <div class="info-value"><a href="https://www.linkedin.com/in/himank-sharma-6aa115371/" target="_blank">himank-sharma-6aa115371</a></div>
+        </div>
+        <div class="info-card">
+          <div class="info-label">GitHub</div>
+          <div class="info-value"><a href="https://github.com/Theblackswordsorcerer" target="_blank">Theblackswordsorcerer</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">Snowman Code Playground</div>
+          <div class="project-desc">A browser-based code playground where you can write and run HTML, CSS, and JavaScript directly in the browser. Built as a fun side project to make frontend experimentation more accessible and instant.</div>
+          <div class="project-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Browser IDE</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">Snow OS — Browser-Based Web Operating System</div>
+          <div class="project-desc">A fully functional Web OS built with HTML, CSS, and JavaScript that simulates a real desktop environment right in the browser. Features a windowed UI, login screen, and desktop interactions, all running client-side with no backend required.</div>
+          <div class="project-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Web OS</span><span class="tag">Browser App</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">FocusTogether — Real-Time Study Companion</div>
+          <div class="project-desc">A lightweight real-time study companion that lets you create or join virtual focus sessions. Built to make studying a social, accountable experience. Developed as part of "FocusTogether — Study Smarter, Together."</div>
+          <div class="project-tags">
+            <span class="tag">Real-Time</span><span class="tag">Study Tool</span><span class="tag">Productivity</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">AI-Powered Financial Chatbot (BCG GenAI Simulation)</div>
+          <div class="project-desc">Completed the BCG GenAI Job Simulation on Forage — developed an AI-powered financial chatbot for BCG's GenAI Consulting team. Applied agentic AI principles to automate financial advisory workflows.</div>
+          <div class="project-tags">
+            <span class="tag">GenAI</span><span class="tag">Chatbot</span><span class="tag">Financial AI</span><span class="tag">BCG</span><span class="tag">Forage</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot" style="background: var(--accent);"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">Skyscanner Front-End Web Application (Job Simulation)</div>
+          <div class="project-desc">Built a web application as part of Skyscanner's Front-End Software Engineering job simulation. Applied JavaScript and modern frontend techniques to deliver a functional, user-facing product.</div>
+          <div class="project-tags">
+            <span class="tag">JavaScript</span><span class="tag">Front-End</span><span class="tag">Skyscanner</span><span class="tag">Forage</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot" style="background: var(--accent);"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">Dropwizard Microservice — Software Engineering Simulation</div>
+          <div class="project-desc">Created a Dropwizard microservice to assist users in finding cars, as part of Skyscanner's Software Engineering simulation. Worked on service-oriented architecture and REST API principles.</div>
+          <div class="project-tags">
+            <span class="tag">Dropwizard</span><span class="tag">Microservice</span><span class="tag">REST API</span><span class="tag">Skyscanner</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot" style="background: var(--accent);"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">Cyber Activity Log Analyzer (Deloitte Simulation)</div>
+          <div class="project-desc">Completed a Deloitte Australia Cyber job simulation involving reading web activity logs to identify suspicious patterns and perform cybersecurity analysis. Applied real-world cyber defense methodologies.</div>
+          <div class="project-tags">
+            <span class="tag">Cybersecurity</span><span class="tag">Log Analysis</span><span class="tag">Deloitte</span><span class="tag">Forage</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot" style="background: var(--accent);"></div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <div class="project-name">Electrical System Design (GE Aerospace Simulation)</div>
+          <div class="project-desc">Completed GE Aerospace's Explore Electrical Engineering job simulation involving electrical system design and analysis challenges, exploring engineering principles used in aerospace applications.</div>
+          <div class="project-tags">
+            <span class="tag">Electrical Engineering</span><span class="tag">GE Aerospace</span><span class="tag">Forage</span>
+          </div>
+        </div>
+        <div class="project-status"><div class="status-dot" style="background: var(--accent);"></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <div class="skill-name">Artificial Intelligence (AI)</div>
+        <div class="skill-source">Deloitte Australia · Machine Learning-1</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Machine Learning</div>
+        <div class="skill-source">Columbia+ · Machine Learning-1</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">JavaScript</div>
+        <div class="skill-source">JP Morgan Chase · Skyscanner Front-End</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Software Development</div>
+        <div class="skill-source">Machine Learning-1 · JP Morgan Chase</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Cybersecurity</div>
+        <div class="skill-source">Deloitte Australia – Cyber</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Cyber Defense</div>
+        <div class="skill-source">Deloitte Australia – Cyber</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Cyber Operations</div>
+        <div class="skill-source">Deloitte Australia · Skyscanner Software Eng.</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Information Technology</div>
+        <div class="skill-source">Skyscanner – Software Engineering</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Project Management</div>
+        <div class="skill-source">Dr. Bhimrao Ambedkar School</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Java</div>
+        <div class="skill-source">JP Morgan Chase – Certified Software Engineer</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Creativity</div>
+        <div class="skill-source">Skyscanner – Software Engineering</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Student Discipline</div>
+        <div class="skill-source">Machine Learning-1</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Front-End Development</div>
+        <div class="skill-source">Skyscanner Front-End Software Engineering</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Agentic AI</div>
+        <div class="skill-source">Newton School · Agentic AI Masterclass</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Large Language Models</div>
+        <div class="skill-source">Google Developer Program – ML Crash Course</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Neural Networks</div>
+        <div class="skill-source">Google Developer Program – ML Crash Course</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Embeddings</div>
+        <div class="skill-source">Google Developer Program – ML Crash Course</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Logistic Regression</div>
+        <div class="skill-source">Google Developer Program – ML Crash Course</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">AI Ethics</div>
+        <div class="skill-source">Kaggle – Intro to AI Ethics</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-name">Space Science & Technology</div>
+        <div class="skill-source">IIT Kharagpur – Space Quiz 14</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div style="display: flex; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted);">
+        <span style="width: 10px; height: 10px; background: var(--accent); border-radius: 1px; display: inline-block;"></span> Certificate of Completion
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted);">
+        <span style="width: 10px; height: 10px; background: var(--blue); border-radius: 1px; display: inline-block;"></span> Certificate of Participation
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted);">
+        <span style="width: 10px; height: 10px; background: var(--green); border-radius: 1px; display: inline-block;"></span> Certificate of Initiation
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted);">
+        <span style="width: 10px; height: 10px; background: #c084fc; border-radius: 1px; display: inline-block;"></span> Course / Program
+      </div>
+    </div>
+    <div class="cert-grid">
+
+      <!-- COMPLETIONS (Forage) -->
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">Agentic AI Executive Masterclass</div>
+        <div class="cert-issuer">Newton School</div>
+        <div class="cert-date">Automate emails, tasks, and workflows with custom AI agents</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">BCG GenAI Job Simulation</div>
+        <div class="cert-issuer">BCG × Forage</div>
+        <div class="cert-date">Oct 2025 · Credential: 0.cGTVTNXUHA5W8Xoiy5</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">Skyscanner — Front-End Software Engineering Job Simulation</div>
+        <div class="cert-issuer">Forage</div>
+        <div class="cert-date">Sep 2025 · Skills: JavaScript · Credential: 0.c52d0d9e6a2Cu0CsT9</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">Skyscanner — Software Engineering Job Simulation</div>
+        <div class="cert-issuer">Forage</div>
+        <div class="cert-date">Sep 2025 · Skills: IT, Cyber Operations +1 · Credential: 0.GQT2T6Tbsa8qydoem</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">GE Aerospace — Explore Electrical Engineering Job Simulation</div>
+        <div class="cert-issuer">Forage</div>
+        <div class="cert-date">Sep 2025 · Credential: 0.rcGokSoCj0X2Qc3d4</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">JP Morgan Chase — Certified Software Engineer Job Simulation</div>
+        <div class="cert-issuer">Forage</div>
+        <div class="cert-date">Skills: Java, Software Development +1 skill</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">Deloitte Australia — Cyber Job Simulation</div>
+        <div class="cert-issuer">Forage</div>
+        <div class="cert-date">Sep 2025 · Skills: Cyber, Cybersecurity +3 · Credential: 0.ParGW1qjS.4cmwA</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">AI Tools Workshop</div>
+        <div class="cert-issuer">be10x</div>
+        <div class="cert-date">Feb 2026 · Credential: 0.02T6T77F-d699-4406-629b-1e1ca1cd69671875720</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Certificate of Completion</div>
+        <div class="cert-name">Machine Learning I</div>
+        <div class="cert-issuer">Columbia+</div>
+        <div class="cert-date">Skills: Machine Learning, AI, CSE, Software Dev, Student Discipline · badges.plus.columbia.edu</div>
+      </div>
+
+      <!-- INITIATIONS -->
+      <div class="cert-card type-initiation">
+        <div class="cert-type">Certificate of Initiation</div>
+        <div class="cert-name">Space Quiz 14 — National Students' Space Challenge</div>
+        <div class="cert-issuer">Linctop · IIT Kharagpur</div>
+        <div class="cert-date">Jan 2026 · Credential: 0.Teba8d65-5671-4dd3-8372-69f9e1f32974</div>
+      </div>
+
+      <div class="cert-card type-initiation">
+        <div class="cert-type">Certificate of Initiation</div>
+        <div class="cert-name">MOSIP Decode Hackathon — Digital Governance Summit 2026 of Shaastra</div>
+        <div class="cert-issuer">Linctop · IIT Madras</div>
+        <div class="cert-date">Jan 2026 · Credential: 0.bd7E4c0-416e-4252-b31f-eedcec688f9b</div>
+      </div>
+
+      <div class="cert-card type-initiation">
+        <div class="cert-type">Certificate of Initiation</div>
+        <div class="cert-name">India's Biggest AI Hackathon</div>
+        <div class="cert-issuer">Linctop</div>
+        <div class="cert-date">Dec 2025 · Credential: 0.2b0c2f9-a106-4d04-b601-779dd1b82906e</div>
+      </div>
+
+      <!-- PARTICIPATIONS -->
+      <div class="cert-card type-participation">
+        <div class="cert-type">Certificate of Participation</div>
+        <div class="cert-name">DRISHTI-NE Hackathon 2025</div>
+        <div class="cert-issuer">Linctop · Indian Institute of Management (IIM) Shillong · Unetop</div>
+        <div class="cert-date">Organized during Unetop Holiday Fest · Collaborated with IndSon</div>
+      </div>
+
+      <div class="cert-card type-participation">
+        <div class="cert-type">Certificate of Participation</div>
+        <div class="cert-name">ATLAS Hackathon 2025 — AI Trailblazers</div>
+        <div class="cert-issuer">ATLAS Skills Tec University × uGOX</div>
+        <div class="cert-date">National Innovation Challenge — Ignite The Future of AI</div>
+      </div>
+
+      <!-- COURSES -->
+      <div class="cert-card type-course">
+        <div class="cert-type">Course Completion</div>
+        <div class="cert-name">Machine Learning Crash Course: Neural Networks</div>
+        <div class="cert-issuer">Google Developer Program (Google for Developers)</div>
+        <div class="cert-date">developers.google.com</div>
+      </div>
+
+      <div class="cert-card type-course">
+        <div class="cert-type">Course Completion</div>
+        <div class="cert-name">Machine Learning Crash Course: Logistic Regression</div>
+        <div class="cert-issuer">Google Developer Program</div>
+        <div class="cert-date">developers.google.com</div>
+      </div>
+
+      <div class="cert-card type-course">
+        <div class="cert-type">Course Completion</div>
+        <div class="cert-name">Machine Learning Crash Course: Large Language Models</div>
+        <div class="cert-issuer">Google Developer Program</div>
+        <div class="cert-date">developers.google.com</div>
+      </div>
+
+      <div class="cert-card type-course">
+        <div class="cert-type">Course Completion</div>
+        <div class="cert-name">Machine Learning Crash Course: Embeddings</div>
+        <div class="cert-issuer">Google Developer Program</div>
+        <div class="cert-date">developers.google.com</div>
+      </div>
+
+      <div class="cert-card type-course">
+        <div class="cert-type">Course / Program</div>
+        <div class="cert-name">Joined the Google Developer Program</div>
+        <div class="cert-issuer">Google for Developers</div>
+        <div class="cert-date">developers.google.com</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Course Completion</div>
+        <div class="cert-name">Intro to AI Ethics</div>
+        <div class="cert-issuer">Kaggle</div>
+        <div class="cert-date">kaggle.com</div>
+      </div>
+
+      <div class="cert-card type-completion">
+        <div class="cert-type">Language Certification — C2 Proficient</div>
+        <div class="cert-name">C2 Proficient English Certificate</div>
+        <div class="cert-issuer">EF SET (EF Standard English Test)</div>
+        <div class="cert-date">Common European Framework of Reference (CEFR) — C2 Level · efset.org</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HACKATHONS & COMPETITIONS -->
+<section id="hackathons">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Hackathons & Competitions</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="hack-list">
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">DRISHTI-NE Hackathon 2025</div>
+          <div class="hack-desc">Participated in the DRISHTI-NE Hackathon organized by Unetop during Unetop Holiday Fest, in collaboration with IndSon Institute of Management Shillong. An amazing opportunity to solve real-world problems.</div>
+        </div>
+        <span class="hack-badge badge-participated">Participated</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">ATLAS Hackathon 2025 — AI Trailblazers</div>
+          <div class="hack-desc">Participated in this national innovation challenge focused on the future of AI, organized by ATLAS Skills Tec University and uGOX. An incredible experience working on real-world AI problems.</div>
+        </div>
+        <span class="hack-badge badge-participated">Participated</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">India's Biggest AI Hackathon</div>
+          <div class="hack-desc">Participated in India's Biggest AI Hackathon organized by Masters' Union School of Business. An exciting experience working on real-world AI problems at scale.</div>
+        </div>
+        <span class="hack-badge badge-participated">Participated</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">MOSIP Decode Hackathon — Digital Governance Summit 2026</div>
+          <div class="hack-desc">Participated in the MOSIP Decode Hackathon at Shaastra 2026 (IIT Madras' Digital Governance Summit), organized by IIT Madras. A great opportunity to dive into tech for public good.</div>
+        </div>
+        <span class="hack-badge badge-participated">Participated</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">Space Quiz 14 — National Students' Space Challenge</div>
+          <div class="hack-desc">Participated in Space Quiz 14 as part of the National Students' Space Challenge organized by IIT Kharagpur. Exploring space science and technology always fuels curiosity.</div>
+        </div>
+        <span class="hack-badge badge-participated">Participated</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">BCG GenAI Job Simulation</div>
+          <div class="hack-desc">Completed BCG's GenAI simulation on Forage — developed an AI-powered financial chatbot for BCG's GenAI Consulting team, applying agentic AI methodologies.</div>
+        </div>
+        <span class="hack-badge badge-completed">Completed</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">Deloitte Australia Cyber Job Simulation</div>
+          <div class="hack-desc">Completed a job simulation involving reading web activity logs, identifying threats, and applying cyber defense strategies used by Deloitte's cybersecurity teams.</div>
+        </div>
+        <span class="hack-badge badge-completed">Completed</span>
+      </div>
+
+      <div class="hack-item">
+        <div>
+          <div class="hack-name">Skyscanner Front-End Software Engineering Simulation</div>
+          <div class="hack-desc">Completed a job simulation building a web application using JavaScript — applied real front-end engineering skills in a simulated industry environment.</div>
+        </div>
+        <span class="hack-badge badge-completed">Completed</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Education</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="edu-block">
+      <div class="edu-icon">DR</div>
+      <div>
+        <div class="edu-name">Dr. Bhimrao Ambedkar School of Specialised Excellence</div>
+        <div class="edu-detail">
+          2011 – 2026 &nbsp;·&nbsp; Passed Out — Grade 12<br>
+          Project Management &nbsp;·&nbsp; Information Sciences &amp; Communication Track
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <p style="color: var(--muted); margin-bottom: 2rem; max-width: 500px;">
+      Open to collaborations, hackathons, research opportunities, and interesting conversations about AI, ML, and technology.
+    </p>
+    <div class="contact-grid">
+      <a href="https://www.linkedin.com/in/himank-sharma-6aa115371/" target="_blank" class="contact-item">
+        <div class="contact-platform">LinkedIn</div>
+        <div class="contact-handle">himank-sharma-6aa115371</div>
+      </a>
+      <a href="https://github.com/Theblackswordsorcerer" target="_blank" class="contact-item">
+        <div class="contact-platform">GitHub</div>
+        <div class="contact-handle">Theblackswordsorcerer</div>
+      </a>
+      <div class="contact-item" style="cursor: default;">
+        <div class="contact-platform">Location</div>
+        <div class="contact-handle">Delhi, India</div>
+      </div>
+      <div class="contact-item" style="cursor: default;">
+        <div class="contact-platform">Status</div>
+        <div class="contact-handle" style="color: var(--green);">Open to Opportunities</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Himank Sharma &copy; 2026</span>
+  <span>Delhi, India &nbsp;·&nbsp; Built with HTML, CSS & JS</span>
+</footer>
+
+</body>
+</html>
