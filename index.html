@@ -1191,27 +1191,31 @@
         <div class="contact-platform">GitHub</div>
         <div class="contact-handle">Theblackswordsorcerer</div>
       </a>
+      <a id="email-link" class="contact-item" href="#">
+        <div class="contact-platform">Email</div>
+        <div class="contact-handle" id="email-display">himank.sharma.forwork&#64;gmail&#46;com</div>
+      </a>
       <div class="contact-item" style="cursor: default;">
         <div class="contact-platform">Location</div>
         <div class="contact-handle">Delhi, India</div>
       </div>
-      <a href="mailto:himank.sharma.forwork@gmail.com" class="contact-item">
-        <div class="contact-platform">Email</div>
-        <div class="contact-handle">himank.sharma.forwork@gmail.com</div>
-      </a>
-      <div class="contact-item" style="cursor: default;">
+      <div class="contact-item" style="cursor: default; grid-column: span 2;">
         <div class="contact-platform">Status</div>
         <div class="contact-handle" style="color: var(--green);">Open to Opportunities</div>
       </div>
     </div>
+    <script>
+      (function() {
+        var u = 'himank.sharma.forwork';
+        var d = 'gmail.com';
+        var e = u + '@' + d;
+        var el = document.getElementById('email-link');
+        if (el) el.href = 'mailto:' + e;
+        var disp = document.getElementById('email-display');
+        if (disp) disp.textContent = e;
+      })();
+    </script>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <span>Himank Sharma &copy; 2026</span>
-  <span>Delhi, India &nbsp;·&nbsp; Built with HTML, CSS & JS</span>
-</footer>
-
-</body>
-</html>
+<!-
