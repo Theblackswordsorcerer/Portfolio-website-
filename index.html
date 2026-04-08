@@ -39,6 +39,34 @@
     cursor: none;
   }
 
+  /* ---- LIQUID METAL CANVAS ---- */
+  #liquid-metal-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+  #liquid-metal-canvas.ready { opacity: 1; }
+
+  /* Dark overlay so content stays readable */
+  #liquid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0.82) 60%, rgba(10,10,15,0.95) 100%);
+  }
+
+  /* All page content sits above canvas + overlay */
+  nav, section, .marquee-strip, .divider, footer, #cursor, #cursor-ring,
+  #page-transition, #scroll-progress, .side-num {
+    position: relative;
+    z-index: 10;
+  }
+
   /* ---- GRAIN OVERLAY ---- */
   body::after {
     content: '';
@@ -107,7 +135,6 @@
     align-items: center;
     gap: 12px;
   }
-  /* REC indicator */
   .nav-rec {
     display: flex;
     align-items: center;
@@ -201,20 +228,19 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(232,197,71,0.06) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(91,156,246,0.04) 0%, transparent 60%);
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(232,197,71,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(91,156,246,0.03) 0%, transparent 60%);
     pointer-events: none;
   }
   .hero-grid-lines {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
     background-size: 80px 80px;
     pointer-events: none;
   }
-  /* Kookie-style HUD corners */
   .hud-corner {
     position: absolute;
     width: 20px; height: 20px;
@@ -225,7 +251,6 @@
   .hud-corner.bl { bottom: 2rem; left: 2rem; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
   .hud-corner.br { bottom: 2rem; right: 2rem; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
 
-  /* Kookie-style coordinates */
   .hero-coords {
     position: absolute;
     right: 4rem;
@@ -277,7 +302,6 @@
     50% { opacity: 0.5; transform: scale(0.7); }
   }
 
-  /* ---- SPLIT TEXT HERO ---- */
   .hero h1 {
     font-family: var(--font-display);
     font-size: clamp(56px, 8vw, 100px);
@@ -331,7 +355,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ---- MAGNETIC BUTTONS ---- */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -399,7 +422,8 @@
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     padding: 12px 0;
-    background: var(--surface);
+    background: rgba(17,17,24,0.75);
+    backdrop-filter: blur(8px);
     position: relative;
   }
   .marquee-strip::before,
@@ -411,8 +435,8 @@
     z-index: 2;
     pointer-events: none;
   }
-  .marquee-strip::before { left: 0; background: linear-gradient(90deg, var(--surface), transparent); }
-  .marquee-strip::after { right: 0; background: linear-gradient(-90deg, var(--surface), transparent); }
+  .marquee-strip::before { left: 0; background: linear-gradient(90deg, rgba(17,17,24,0.9), transparent); }
+  .marquee-strip::after { right: 0; background: linear-gradient(-90deg, rgba(17,17,24,0.9), transparent); }
   .marquee-inner {
     display: flex;
     gap: 0;
@@ -511,7 +535,8 @@
     gap: 1rem;
   }
   .info-card {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 1.25rem 1.5rem;
@@ -536,7 +561,8 @@
   /* ---- PROJECTS ---- */
   .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
   .project-card {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 2rem;
@@ -557,7 +583,7 @@
     transform-origin: bottom;
     transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
   }
-  .project-card:hover { border-color: var(--border2); background: var(--surface2); transform: translateX(4px); }
+  .project-card:hover { border-color: var(--border2); background: rgba(24,24,31,0.85); transform: translateX(4px); }
   .project-card:hover::before { transform: scaleY(1); }
   .project-name {
     font-family: var(--font-display);
@@ -582,14 +608,15 @@
   .project-status { display: flex; align-items: flex-start; padding-top: 4px; }
   .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-top: 6px; }
 
-  /* ---- SKILLS ---- */
+  /* ---- SKILLS GRID ---- */
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
   }
   .skill-item {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 1rem 1.25rem;
@@ -598,10 +625,244 @@
   .skill-item:hover {
     border-color: rgba(232,197,71,0.3);
     transform: translateY(-3px);
-    background: var(--surface2);
+    background: rgba(24,24,31,0.85);
   }
   .skill-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
   .skill-source { font-family: var(--font-mono); font-size: 10px; color: var(--faint); letter-spacing: 0.04em; }
+
+  /* ---- ORBITAL TIMELINE ---- */
+  .orbital-section {
+    padding: 6rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .orbital-hint {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .orbital-wrap {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .orb-center {
+    position: absolute;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #8b5cf6, #3b82f6, #14b8a6, #8b5cf6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+    animation: orbSpin 8s linear infinite;
+    cursor: default;
+  }
+  .orb-center::before {
+    content: '';
+    position: absolute;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    animation: orbPing 2s ease-in-out infinite;
+  }
+  .orb-center::after {
+    content: '';
+    position: absolute;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.07);
+    animation: orbPing 2s ease-in-out infinite 0.5s;
+  }
+  .orb-inner {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(4px);
+  }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes orbPing {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .orbit-ring {
+    position: absolute;
+    width: 440px; height: 440px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.07);
+    pointer-events: none;
+  }
+
+  .orb-node {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 44px; height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: transform 0.3s cubic-bezier(0.23,1,0.32,1);
+  }
+  .orb-node-bg {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    position: relative;
+  }
+  .orb-node.active .orb-node-bg {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255,255,255,0.25);
+    transform: scale(1.5);
+  }
+  .orb-node.related .orb-node-bg {
+    background: rgba(255,255,255,0.3);
+    border-color: #fff;
+    animation: nodeRelPulse 1s ease-in-out infinite;
+  }
+  @keyframes nodeRelPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+  }
+  .orb-node-label {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+    pointer-events: none;
+    transition: color 0.3s;
+  }
+  .orb-node.active .orb-node-label { color: #fff; transform: translateX(-50%) scale(1.15); }
+  .orb-energy-glow {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .orb-popup {
+    position: absolute;
+    width: 260px;
+    background: rgba(10,10,15,0.95);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 0;
+    z-index: 300;
+    pointer-events: all;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    transform-origin: top center;
+    animation: popupIn 0.3s cubic-bezier(0.23,1,0.32,1) forwards;
+    overflow: hidden;
+  }
+  @keyframes popupIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .orb-popup-connector {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 12px;
+    background: rgba(255,255,255,0.3);
+  }
+  .orb-popup-header {
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .orb-popup-status {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 3px 7px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .status-completed { background: #000; color: #fff; border: 1px solid #fff; }
+  .status-in-progress { background: #fff; color: #000; }
+  .status-pending { background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.2); }
+  .orb-popup-date {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+  }
+  .orb-popup-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 10px 14px 0;
+    line-height: 1.3;
+  }
+  .orb-popup-body { padding: 8px 14px 12px; font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .orb-popup-energy { padding: 10px 14px; border-top: 1px solid rgba(255,255,255,0.07); }
+  .orb-popup-energy-label {
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 6px;
+  }
+  .orb-energy-bar-track {
+    width: 100%; height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px; overflow: hidden;
+  }
+  .orb-energy-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.23,1,0.32,1);
+  }
+  .orb-popup-related { padding: 10px 14px 12px; border-top: 1px solid rgba(255,255,255,0.07); }
+  .orb-popup-related-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .orb-related-btns { display: flex; flex-wrap: wrap; gap: 5px; }
+  .orb-related-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 9px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .orb-related-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+  .node-icon { font-size: 14px; line-height: 1; pointer-events: none; }
 
   /* ---- CERTIFICATIONS ---- */
   .cert-grid {
@@ -610,7 +871,8 @@
     gap: 1rem;
   }
   .cert-card {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 1.5rem;
@@ -655,7 +917,8 @@
     overflow: hidden;
   }
   .hack-item {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     padding: 1.5rem 2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
@@ -665,7 +928,7 @@
     transition: background 0.3s, padding-left 0.3s cubic-bezier(0.23,1,0.32,1);
   }
   .hack-item:last-child { border-bottom: none; }
-  .hack-item:hover { background: var(--surface2); padding-left: 2.5rem; }
+  .hack-item:hover { background: rgba(24,24,31,0.85); padding-left: 2.5rem; }
   .hack-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
   .hack-desc { font-size: 13px; color: var(--muted); max-width: 600px; line-height: 1.6; }
   .hack-badge {
@@ -682,7 +945,8 @@
 
   /* ---- EDUCATION ---- */
   .edu-block {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 2rem;
@@ -712,7 +976,8 @@
   /* ---- CONTACT ---- */
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 700px; }
   .contact-item {
-    background: var(--surface);
+    background: rgba(17,17,24,0.7);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 1.25rem 1.5rem;
@@ -722,7 +987,7 @@
     gap: 4px;
     transition: border-color 0.3s, transform 0.3s cubic-bezier(0.23,1,0.32,1), background 0.3s;
   }
-  .contact-item:hover { border-color: var(--accent); transform: translateY(-3px); background: var(--surface2); }
+  .contact-item:hover { border-color: var(--accent); transform: translateY(-3px); background: rgba(24,24,31,0.85); }
   .contact-platform { font-family: var(--font-mono); font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
   .contact-handle { font-size: 14px; color: var(--text); }
 
@@ -733,6 +998,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(12px);
   }
   footer span { font-family: var(--font-mono); font-size: 12px; color: var(--faint); }
 
@@ -741,9 +1008,11 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--border2), transparent);
     margin: 0 4rem;
+    position: relative;
+    z-index: 10;
   }
 
-  /* ---- PAGE TRANSITION OVERLAY ---- */
+  /* ---- PAGE TRANSITION ---- */
   #page-transition {
     position: fixed;
     inset: 0;
@@ -754,7 +1023,7 @@
     pointer-events: none;
   }
 
-  /* ---- HOVER LINE LINKS (Kookie-style footer links) ---- */
+  /* ---- HOVER LINE LINKS ---- */
   .hover-link {
     position: relative;
     display: inline-block;
@@ -776,6 +1045,28 @@
   .hover-link:hover { color: var(--text); }
   .hover-link:hover::after { transform: scaleX(1); transform-origin: left; }
 
+  /* Section backgrounds for readability over liquid metal */
+  section {
+    background: rgba(10,10,15,0.0);
+  }
+  #about, #projects, #skills, #certifications, #hackathons, #education, #contact, .orbital-section {
+    position: relative;
+  }
+  #about::before, #projects::before, #skills::before, #certifications::before,
+  #hackathons::before, #education::before, #contact::before, .orbital-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,15,0.15);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #about .container, #projects .container, #skills .container, #certifications .container,
+  #hackathons .container, #education .container, #contact .container, .orbital-section .container {
+    position: relative;
+    z-index: 1;
+  }
+
   @media (max-width: 768px) {
     nav { padding: 0 1.5rem; }
     .nav-links { display: none; }
@@ -794,6 +1085,10 @@
 </style>
 </head>
 <body>
+
+<!-- LIQUID METAL CANVAS -->
+<canvas id="liquid-metal-canvas"></canvas>
+<div id="liquid-overlay"></div>
 
 <!-- CUSTOM CURSOR -->
 <div id="cursor"></div>
@@ -819,6 +1114,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#orbital">Orbital</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#certifications">Certifications</a></li>
     <li><a href="#hackathons">Hackathons</a></li>
@@ -1119,7 +1415,25 @@
       <div class="skill-item reveal"><div class="skill-name">Embeddings</div><div class="skill-source">Google Developer Program – ML Crash Course</div></div>
       <div class="skill-item reveal reveal-delay-1"><div class="skill-name">Logistic Regression</div><div class="skill-source">Google Developer Program – ML Crash Course</div></div>
       <div class="skill-item reveal reveal-delay-2"><div class="skill-name">AI Ethics</div><div class="skill-source">Kaggle – Intro to AI Ethics</div></div>
-      <div class="skill-item reveal reveal-delay-3"><div class="skill-name">Space Science & Technology</div><div class="skill-source">IIT Kharagpur – Space Quiz 14</div></div>
+      <div class="skill-item reveal reveal-delay-3"><div class="skill-name">Space Science &amp; Technology</div><div class="skill-source">IIT Kharagpur – Space Quiz 14</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ORBITAL PROJECTS TIMELINE -->
+<section class="orbital-section" id="orbital">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03.5</span>
+      <h2 class="section-title">Projects — Orbital View</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="orbital-hint reveal">Click any node to explore · Click background to reset · Auto-rotates</p>
+    <div class="orbital-wrap reveal" id="orbitalWrap">
+      <div class="orbit-ring"></div>
+      <div class="orb-center"><div class="orb-inner"></div></div>
     </div>
   </div>
 </section>
@@ -1316,6 +1630,178 @@
 </footer>
 
 <script>
+// ============================================================
+// LIQUID METAL WEBGL BACKGROUND
+// Recreates the @paper-design/shaders-react LiquidMetal preset
+// as a pure WebGL shader on a fixed canvas.
+// ============================================================
+(function() {
+  var canvas = document.getElementById('liquid-metal-canvas');
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) { return; }
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Vertex shader — full-screen quad
+  var VS = [
+    'attribute vec2 a_pos;',
+    'void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }'
+  ].join('\n');
+
+  // Fragment shader — liquid metal effect matching paper-design preset 2
+  var FS = [
+    'precision highp float;',
+    'uniform float u_time;',
+    'uniform vec2  u_res;',
+    'uniform vec2  u_mouse;',
+
+    // 2D rotation matrix
+    'mat2 rot(float a) {',
+    '  float s=sin(a), c=cos(a);',
+    '  return mat2(c,-s,s,c);',
+    '}',
+
+    // Hash / noise helpers
+    'float hash(vec2 p) {',
+    '  p = fract(p * vec2(234.34, 435.345));',
+    '  p += dot(p, p + 34.23);',
+    '  return fract(p.x * p.y);',
+    '}',
+
+    'float noise(vec2 p) {',
+    '  vec2 i = floor(p);',
+    '  vec2 f = fract(p);',
+    '  f = f*f*(3.0-2.0*f);',
+    '  float a = hash(i);',
+    '  float b = hash(i+vec2(1,0));',
+    '  float c2 = hash(i+vec2(0,1));',
+    '  float d = hash(i+vec2(1,1));',
+    '  return mix(mix(a,b,f.x), mix(c2,d,f.x), f.y);',
+    '}',
+
+    // Fractal Brownian Motion
+    'float fbm(vec2 p) {',
+    '  float v=0.0, a=0.5;',
+    '  mat2 r = rot(0.5);',
+    '  for(int i=0;i<6;i++) {',
+    '    v += a * noise(p);',
+    '    p  = r * p * 2.0;',
+    '    a *= 0.5;',
+    '  }',
+    '  return v;',
+    '}',
+
+    'void main() {',
+    '  vec2 uv = (gl_FragCoord.xy - u_res*0.5) / min(u_res.x, u_res.y);',
+    '  vec2 mouse = (u_mouse - u_res*0.5) / min(u_res.x, u_res.y);',
+
+    // Slow drift + mouse influence
+    '  float t = u_time * 0.12;',
+    '  vec2 p = uv * 2.0;',
+    '  p += mouse * 0.25;',
+
+    // Domain-warped fbm for liquid look
+    '  vec2 q = vec2(fbm(p + vec2(0.0, 0.0)),',
+    '                fbm(p + vec2(5.2, 1.3)));',
+    '  vec2 r2 = vec2(fbm(p + 4.0*q + vec2(1.7+t, 9.2)),',
+    '                 fbm(p + 4.0*q + vec2(8.3, 2.8+t)));',
+    '  float f = fbm(p + 4.0*r2);',
+
+    // Metallic colour palette — silver/gold/deep blue matching preset 2
+    // Blends: near-black, silver-blue, gold, white
+    '  vec3 col;',
+    '  col = mix(vec3(0.02, 0.02, 0.06),',
+    '            vec3(0.18, 0.20, 0.28),',
+    '            clamp(f*f*4.0, 0.0, 1.0));',
+    '  col = mix(col,',
+    '            vec3(0.55, 0.48, 0.28),',
+    '            clamp(f*2.5, 0.0, 1.0));',
+    '  col = mix(col,',
+    '            vec3(0.85, 0.82, 0.70),',
+    '            clamp(length(r2), 0.0, 1.0));',
+
+    // Bright specular streak
+    '  float spec = pow(clamp(f*1.4-0.3, 0.0, 1.0), 3.0);',
+    '  col += vec3(0.9, 0.85, 0.6) * spec * 0.7;',
+
+    // Subtle vignette to keep edges dark
+    '  float vign = 1.0 - dot(uv*0.9, uv*0.9);',
+    '  col *= clamp(vign*1.2, 0.0, 1.0);',
+
+    '  gl_FragColor = vec4(col, 1.0);',
+    '}'
+  ].join('\n');
+
+  function compileShader(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+
+  var prog = gl.createProgram();
+  gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  // Full-screen quad
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    -1,-1,  1,-1,  -1,1,
+     1,-1,  1, 1,  -1,1
+  ]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  var uTime  = gl.getUniformLocation(prog, 'u_time');
+  var uRes   = gl.getUniformLocation(prog, 'u_res');
+  var uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  var mouseX = window.innerWidth  * 0.5;
+  var mouseY = window.innerHeight * 0.5;
+  var targetX = mouseX, targetY = mouseY;
+
+  document.addEventListener('mousemove', function(e) {
+    targetX = e.clientX;
+    targetY = e.clientY;
+  });
+
+  var start = performance.now();
+
+  function render() {
+    // Smooth mouse
+    mouseX += (targetX - mouseX) * 0.05;
+    mouseY += (targetY - mouseY) * 0.05;
+
+    var t = (performance.now() - start) * 0.001;
+    gl.uniform1f(uTime, t);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    // Flip Y for WebGL coordinate system
+    gl.uniform2f(uMouse, mouseX, canvas.height - mouseY);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    requestAnimationFrame(render);
+  }
+
+  render();
+
+  // Fade in canvas after first frame
+  setTimeout(function() {
+    canvas.classList.add('ready');
+  }, 100);
+})();
+
+// ============================================================
+// ORIGINAL PORTFOLIO JS
+// ============================================================
 (function() {
   // Email reveal
   var u = 'himank.sharma.forwork';
@@ -1397,6 +1883,225 @@
       btn.style.transform = '';
     });
   });
+
+  // ---- ORBITAL TIMELINE ----
+  var ORBITAL_DATA = [
+    {
+      id: 1, title: 'Snow OS', date: '2025',
+      content: 'A fully functional Web OS simulating a real desktop environment in the browser — windowed UI, login screen, all client-side.',
+      category: 'Web', icon: '⬛', relatedIds: [2, 3], status: 'completed', energy: 90
+    },
+    {
+      id: 2, title: 'Code Playground', date: '2025',
+      content: 'Browser-based IDE to write and run HTML, CSS, and JS instantly — making frontend experimentation accessible and fun.',
+      category: 'Tool', icon: '🖥', relatedIds: [1, 3], status: 'completed', energy: 78
+    },
+    {
+      id: 3, title: 'FocusTogether', date: '2025',
+      content: 'Real-time study companion for virtual focus sessions — studying becomes social and accountable.',
+      category: 'App', icon: '⏱', relatedIds: [1, 2], status: 'in-progress', energy: 65
+    },
+    {
+      id: 4, title: 'BCG Chatbot', date: 'Oct 2025',
+      content: 'AI-powered financial chatbot for BCG GenAI Consulting — agentic AI automating financial advisory workflows.',
+      category: 'AI', icon: '🤖', relatedIds: [5, 8], status: 'completed', energy: 95
+    },
+    {
+      id: 5, title: 'Skyscanner FE', date: 'Sep 2025',
+      content: 'Front-end web application built for Skyscanner\'s job simulation using JavaScript and modern techniques.',
+      category: 'Frontend', icon: '✈', relatedIds: [4, 6], status: 'completed', energy: 80
+    },
+    {
+      id: 6, title: 'Microservice', date: 'Sep 2025',
+      content: 'Dropwizard microservice for car search — REST API and service-oriented architecture for Skyscanner simulation.',
+      category: 'Backend', icon: '⚙', relatedIds: [5], status: 'completed', energy: 72
+    },
+    {
+      id: 7, title: 'Cyber Analyzer', date: 'Sep 2025',
+      content: 'Deloitte cyber simulation — reading web activity logs to identify threats using real-world cybersecurity methods.',
+      category: 'Cyber', icon: '🔐', relatedIds: [8], status: 'completed', energy: 85
+    },
+    {
+      id: 8, title: 'GE Aerospace', date: 'Sep 2025',
+      content: 'Electrical system design challenges exploring engineering principles used in aerospace — GE Aerospace simulation.',
+      category: 'Engineering', icon: '⚡', relatedIds: [4, 7], status: 'completed', energy: 70
+    }
+  ];
+
+  var orbWrap = document.getElementById('orbitalWrap');
+  if (orbWrap) {
+    var rotAngle = 0;
+    var autoRot = true;
+    var rotTimer = null;
+    var activeId = null;
+    var nodeEls = {};
+    var radius = 200;
+
+    ORBITAL_DATA.forEach(function(item) {
+      var node = document.createElement('div');
+      node.className = 'orb-node';
+      node.id = 'orb-node-' + item.id;
+      node.dataset.id = item.id;
+
+      var glowSize = item.energy * 0.6 + 40;
+      var glow = document.createElement('div');
+      glow.className = 'orb-energy-glow';
+      glow.style.cssText = 'width:' + glowSize + 'px;height:' + glowSize + 'px;top:' + (-(glowSize-40)/2) + 'px;left:' + (-(glowSize-40)/2) + 'px;';
+
+      var bg = document.createElement('div');
+      bg.className = 'orb-node-bg';
+      var iconEl = document.createElement('span');
+      iconEl.className = 'node-icon';
+      iconEl.textContent = item.icon;
+      bg.appendChild(iconEl);
+
+      var label = document.createElement('div');
+      label.className = 'orb-node-label';
+      label.textContent = item.title;
+
+      node.appendChild(glow);
+      node.appendChild(bg);
+      node.appendChild(label);
+      orbWrap.appendChild(node);
+      nodeEls[item.id] = node;
+
+      node.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleOrbNode(item.id);
+      });
+    });
+
+    function positionNodes() {
+      ORBITAL_DATA.forEach(function(item, idx) {
+        var angle = ((idx / ORBITAL_DATA.length) * 360 + rotAngle) % 360;
+        var rad = angle * Math.PI / 180;
+        var x = radius * Math.cos(rad);
+        var y = radius * Math.sin(rad);
+        var zIdx = Math.round(100 + 50 * Math.cos(rad));
+        var opac = Math.max(0.35, Math.min(1, 0.35 + 0.65 * ((1 + Math.sin(rad)) / 2)));
+        var node = nodeEls[item.id];
+        node.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+        node.style.zIndex = (activeId === item.id) ? 200 : zIdx;
+        if (activeId === null) node.style.opacity = opac;
+      });
+    }
+
+    function startRotation() {
+      if (rotTimer) clearInterval(rotTimer);
+      rotTimer = setInterval(function() {
+        rotAngle = (rotAngle + 0.3) % 360;
+        positionNodes();
+      }, 50);
+    }
+
+    function stopRotation() {
+      if (rotTimer) { clearInterval(rotTimer); rotTimer = null; }
+    }
+
+    function toggleOrbNode(id) {
+      if (activeId === id) { closeOrbPopup(); return; }
+      closeOrbPopup();
+      activeId = id;
+      autoRot = false;
+      stopRotation();
+
+      var idx = ORBITAL_DATA.findIndex(function(i){ return i.id === id; });
+      var targetAngle = (idx / ORBITAL_DATA.length) * 360;
+      rotAngle = (270 - targetAngle + 360) % 360;
+      positionNodes();
+
+      Object.keys(nodeEls).forEach(function(nid) {
+        nodeEls[nid].classList.remove('active','related');
+        nodeEls[nid].style.opacity = '0.35';
+      });
+      nodeEls[id].classList.add('active');
+      nodeEls[id].style.opacity = '1';
+
+      var item = ORBITAL_DATA.find(function(i){ return i.id === id; });
+      item.relatedIds.forEach(function(rid) {
+        if (nodeEls[rid]) {
+          nodeEls[rid].classList.add('related');
+          nodeEls[rid].style.opacity = '0.8';
+        }
+      });
+
+      showOrbPopup(item, nodeEls[id]);
+    }
+
+    function showOrbPopup(item, nodeEl) {
+      var existing = document.getElementById('orb-popup');
+      if (existing) existing.remove();
+
+      var popup = document.createElement('div');
+      popup.className = 'orb-popup';
+      popup.id = 'orb-popup';
+
+      var statusMap = { completed:'COMPLETE', 'in-progress':'IN PROGRESS', pending:'PENDING' };
+      var statusClass = { completed:'status-completed', 'in-progress':'status-in-progress', pending:'status-pending' };
+
+      var relBtns = item.relatedIds.map(function(rid) {
+        var rel = ORBITAL_DATA.find(function(i){ return i.id === rid; });
+        return '<button class="orb-related-btn" onclick="window._orbToggle(' + rid + ')">' + (rel ? rel.title : rid) + ' →</button>';
+      }).join('');
+
+      popup.innerHTML =
+        '<div class="orb-popup-connector"></div>' +
+        '<div class="orb-popup-header">' +
+          '<span class="orb-popup-status ' + statusClass[item.status] + '">' + statusMap[item.status] + '</span>' +
+          '<span class="orb-popup-date">' + item.date + '</span>' +
+        '</div>' +
+        '<div class="orb-popup-title">' + item.title + '</div>' +
+        '<div class="orb-popup-body">' + item.content + '</div>' +
+        '<div class="orb-popup-energy">' +
+          '<div class="orb-popup-energy-label"><span>⚡ Energy Level</span><span>' + item.energy + '%</span></div>' +
+          '<div class="orb-energy-bar-track"><div class="orb-energy-bar-fill" style="width:0%"></div></div>' +
+        '</div>' +
+        (item.relatedIds.length > 0 ?
+          '<div class="orb-popup-related"><div class="orb-popup-related-label">🔗 Connected Nodes</div><div class="orb-related-btns">' + relBtns + '</div></div>'
+          : '');
+
+      var wrapRect = orbWrap.getBoundingClientRect();
+      var nodeRect = nodeEl.getBoundingClientRect();
+      var popupLeft = nodeRect.left - wrapRect.left + (nodeRect.width / 2) - 130;
+      var popupTop = nodeRect.top - wrapRect.top - 320;
+      popupLeft = Math.max(8, Math.min(popupLeft, orbWrap.offsetWidth - 268));
+      if (popupTop < 8) popupTop = nodeRect.top - wrapRect.top + 58;
+
+      popup.style.left = popupLeft + 'px';
+      popup.style.top = popupTop + 'px';
+      orbWrap.appendChild(popup);
+
+      setTimeout(function() {
+        var fill = popup.querySelector('.orb-energy-bar-fill');
+        if (fill) fill.style.width = item.energy + '%';
+      }, 80);
+
+      popup.addEventListener('click', function(e){ e.stopPropagation(); });
+    }
+
+    function closeOrbPopup() {
+      var existing = document.getElementById('orb-popup');
+      if (existing) existing.remove();
+      activeId = null;
+      autoRot = true;
+      Object.keys(nodeEls).forEach(function(nid) {
+        nodeEls[nid].classList.remove('active','related');
+        nodeEls[nid].style.opacity = '';
+      });
+      startRotation();
+    }
+
+    orbWrap.addEventListener('click', function(e) {
+      if (e.target === orbWrap || e.target.classList.contains('orbit-ring') || e.target.classList.contains('orb-center') || e.target.classList.contains('orb-inner')) {
+        closeOrbPopup();
+      }
+    });
+
+    window._orbToggle = function(id) { toggleOrbNode(id); };
+
+    positionNodes();
+    startRotation();
+  }
 })();
 </script>
 </body>
